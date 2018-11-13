@@ -38,7 +38,7 @@ def group(values: list, n: int) -> list:
     return grouplist
 
 
-def get_row(values: list, pos: (int, int)) -> list:
+def get_row(values: list, pos: tuple) -> list:
     """ Возвращает все значения для номера строки, указанной в pos
 
     >>> get_row([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
@@ -52,7 +52,7 @@ def get_row(values: list, pos: (int, int)) -> list:
     return values[row]
 
 
-def get_col(values: list, pos: (int, int)) -> list:
+def get_col(values: list, pos: tuple) -> list:
     """ Возвращает все значения для номера столбца, указанного в pos
 
     >>> get_col([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
@@ -66,7 +66,7 @@ def get_col(values: list, pos: (int, int)) -> list:
     return [row[ci] for row in values]
 
 
-def get_block(values: list, pos: (int, int)) -> list:
+def get_block(values: list, pos: tuple) -> list:
     """ Возвращает все значения из квадрата, в который попадает позиция pos
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -81,7 +81,7 @@ def get_block(values: list, pos: (int, int)) -> list:
     return [values[i][j] for i in range(row-row % 3, row-row % 3+3) for j in range(col-col % 3, col-col % 3+3)]
 
 
-def find_empty_positions(grid: list) -> (int, int):
+def find_empty_positions(grid: list) -> tuple:
     """ Найти первую свободную позицию в пазле
 
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
@@ -98,7 +98,7 @@ def find_empty_positions(grid: list) -> (int, int):
     return(-1, -1)
 
 
-def find_possible_values(grid: list, pos: (int, int)) -> list:
+def find_possible_values(grid: list, pos: tuple) -> list:
     """ Вернуть множество возможных значения для указанной позиции
 
     >>> grid = read_sudoku('puzzle1.txt')
