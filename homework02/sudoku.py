@@ -10,7 +10,6 @@ def read_sudoku(filename: str) -> List[List[str]]:
     return grid
 
 
-
 def display(values: List[List[str]]) -> None:
     """Вывод Судоку"""
     width = 2
@@ -20,7 +19,6 @@ def display(values: List[List[str]]) -> None:
         if str(row) in '25':
             print(line)
     print()
-
 
 
 def group(values: List[str], n: int) -> List[List[str]]:
@@ -41,7 +39,6 @@ def group(values: List[str], n: int) -> List[List[str]]:
     return grouplist
 
 
-
 def get_row(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """ Возвращает все значения для номера строки, указанной в pos
 
@@ -54,7 +51,6 @@ def get_row(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """
     row, col = pos
     return values[row]
-
 
 
 def get_col(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
@@ -71,7 +67,6 @@ def get_col(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     return [row[ci] for row in values]
 
 
-
 def get_block(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """ Возвращает все значения из квадрата, в который попадает позиция pos
 
@@ -85,7 +80,6 @@ def get_block(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
     """
     row, col = pos
     return [values[i][j] for i in range(row-row % 3, row-row % 3+3) for j in range(col-col % 3, col-col % 3+3)]
-
 
 
 def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
@@ -105,7 +99,6 @@ def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
     return(-1, -1)
 
 
-
 def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str]:
     """ Вернуть множество возможных значения для указанной позиции
 
@@ -118,7 +111,6 @@ def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str
     True
     """
     return set('123456789') - set(get_row(grid, pos) + get_col(grid, pos) + get_block(grid, pos))
-
 
 
 def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
@@ -145,7 +137,6 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
             return newgrid
     grid[row][col] = '.'
     return None
-
 
 
 def check_solution(solution: List[List[str]]) -> bool:
@@ -198,7 +189,6 @@ def check_solution(solution: List[List[str]]) -> bool:
             if setval != order:
                 return False
     return True
-
 
 
 def generate_sudoku(N: int) -> List[List[str]]:
