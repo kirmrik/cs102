@@ -10,11 +10,8 @@ def read_sudoku(filename: str) -> List[List[str]]:
     return grid
 
 
-<<<<<<< HEAD
+
 def display(values: List[List[str]]) -> None:
-=======
-def display(values: list) -> None:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """Вывод Судоку"""
     width = 2
     line = '+'.join(['-' * (width * 3)] * 3)
@@ -25,11 +22,8 @@ def display(values: list) -> None:
     print()
 
 
-<<<<<<< HEAD
+
 def group(values: List[str], n: int) -> List[List[str]]:
-=======
-def group(values: list, n: int) -> list:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
 
@@ -47,11 +41,8 @@ def group(values: list, n: int) -> list:
     return grouplist
 
 
-<<<<<<< HEAD
+
 def get_row(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
-=======
-def get_row(values: list, pos: tuple) -> list:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """ Возвращает все значения для номера строки, указанной в pos
 
     >>> get_row([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
@@ -65,11 +56,8 @@ def get_row(values: list, pos: tuple) -> list:
     return values[row]
 
 
-<<<<<<< HEAD
+
 def get_col(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
-=======
-def get_col(values: list, pos: tuple) -> list:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """ Возвращает все значения для номера столбца, указанного в pos
 
     >>> get_col([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']], (0, 0))
@@ -83,11 +71,8 @@ def get_col(values: list, pos: tuple) -> list:
     return [row[ci] for row in values]
 
 
-<<<<<<< HEAD
+
 def get_block(values: List[List[str]], pos: Tuple[int, int]) -> List[str]:
-=======
-def get_block(values: list, pos: tuple) -> list:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """ Возвращает все значения из квадрата, в который попадает позиция pos
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -102,11 +87,8 @@ def get_block(values: list, pos: tuple) -> list:
     return [values[i][j] for i in range(row-row % 3, row-row % 3+3) for j in range(col-col % 3, col-col % 3+3)]
 
 
-<<<<<<< HEAD
+
 def find_empty_positions(grid: List[List[str]]) -> Optional[Tuple[int, int]]:
-=======
-def find_empty_positions(grid: list) -> tuple:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """ Найти первую свободную позицию в пазле
 
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
@@ -123,11 +105,8 @@ def find_empty_positions(grid: list) -> tuple:
     return(-1, -1)
 
 
-<<<<<<< HEAD
+
 def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str]:
-=======
-def find_possible_values(grid: list, pos: tuple) -> list:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """ Вернуть множество возможных значения для указанной позиции
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -141,11 +120,8 @@ def find_possible_values(grid: list, pos: tuple) -> list:
     return set('123456789') - set(get_row(grid, pos) + get_col(grid, pos) + get_block(grid, pos))
 
 
-<<<<<<< HEAD
+
 def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
-=======
-def solve(grid: list) -> list:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """ Решение пазла, заданного в grid
         Как решать Судоку?
         1. Найти свободную позицию
@@ -171,11 +147,8 @@ def solve(grid: list) -> list:
     return None
 
 
-<<<<<<< HEAD
+
 def check_solution(solution: List[List[str]]) -> bool:
-=======
-def check_solution(solution: list) -> bool:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """ Если решение solution верно, то вернуть True, в противном случае False
     >>> grid = solve(read_sudoku('puzzle1.txt'))
     >>> display(grid)
@@ -227,11 +200,8 @@ def check_solution(solution: list) -> bool:
     return True
 
 
-<<<<<<< HEAD
+
 def generate_sudoku(N: int) -> List[List[str]]:
-=======
-def generate_sudoku(N: int) -> list:
->>>>>>> 0e1cd684f17d04533a19442b80e40fda67a15f5a
     """ Генерация судоку заполненного на N элементов
 
     >>> grid = generate_sudoku(40)
