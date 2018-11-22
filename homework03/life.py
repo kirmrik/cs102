@@ -1,6 +1,6 @@
 import random
 from copy import deepcopy
-from typing import Tuple, List, Set, Optional
+from typing import List, Tuple
 import pygame
 from pygame.locals import *
 
@@ -23,9 +23,6 @@ class GameOfLife:
         # Скорость протекания игры
         self.speed = speed
 
-        # Создание списка клеток
-        self.clist = self.cell_list()
-
     def draw_grid(self) -> None:
         """ Отрисовать сетку """
         for x in range(0, self.width, self.cell_size):
@@ -42,6 +39,8 @@ class GameOfLife:
         pygame.display.set_caption('Game of Life')
         self.screen.fill(pygame.Color('white'))
         running = True
+        # Создание списка клеток
+        self.clist = self.cell_list()
         while running:
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -55,7 +54,7 @@ class GameOfLife:
             clock.tick(self.speed)
         pygame.quit()
 
-    def cell_list(self, randomize: bool = True) -> List[List[str]]:
+    def cell_list(self, randomize: bool = True) -> List[List[int]]:
         """ Создание списка клеток.
 
         :param randomize: Если True, то создается список клеток, где
@@ -77,7 +76,7 @@ class GameOfLife:
             self.clist.append(temp[:])
         return self.clist
 
-    def draw_cell_list(self, clist: List[List[str]]) -> None:
+    def draw_cell_list(self, clist: List[List[int]]) -> None:
         """ Отображение списка клеток
 
         :param clist: Список клеток для отрисовки, представленный в виде матрицы
@@ -88,10 +87,10 @@ class GameOfLife:
                 pos_x = j * self.cell_size + 1
                 pos_y = i * self.cell_size + 1
                 if clist[i][j]:
-                    color = pygame.Color('green')
+                    cell_color = pygame.Color('green')
                 else:
-                    color = pygame.Color('white')
-                pygame.draw.rect(self.screen, color, (pos_x, pos_y, sots, sots))
+                    cell_color = pygame.Color('white')
+                pygame.draw.rect(self.screen, cell_color, (pos_x, pos_y, sots, sots))
 
     def get_neighbours(self, cell: Tuple[int, int]) -> List[int]:
         """ Вернуть список соседей для указанной ячейки
@@ -108,7 +107,7 @@ class GameOfLife:
         neighbours.remove(self.clist[row][col])
         return neighbours
 
-    def update_cell_list(self, clist: List[List[str]]) -> Optional[List[List[str]]]:
+    def update_cell_list(self, clist: List[List[int]]) -> List[List[int]]:
         """ Выполнить один шаг игры.
 
         Обновление всех ячеек происходит одновременно. Функция возвращает
