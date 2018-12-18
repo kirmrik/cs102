@@ -16,7 +16,7 @@ class User(BaseUser):
     bdate: Optional[str]
 
 
-class Message(BaseModel):
+class Message(dict):
     """ Модель сообщения """
     id: int
     date: int
