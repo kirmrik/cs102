@@ -1,7 +1,7 @@
-import requests
 import time
 import datetime as dt
-from typing import Any
+from typing import Any, List
+import requests
 import config
 
 
@@ -19,36 +19,16 @@ def get(url: str, params: dict = {}, timeout: int = 5, max_retries: int = 5,
             response = requests.get(url, params)
             response.raise_for_status()
             if response.json().get('error'):
-                print(response.json()['error']['error_msg'])
                 raise SystemExit()
             return response
-        except requests.ReadTimeout as errt:
+        except requests.exceptions.RequestException:
             if i == max_retries - 1:
-                print("ReadTimeout:", errt)
-                continue
-            pause = (2 ** i) * backoff_factor
-            time.sleep(pause)
-        except requests.exceptions.HTTPError as errh:
-            if i == max_retries - 1:
-                print("HTTPError:", errh)
-                continue
-            pause = (2 ** i) * backoff_factor
-            time.sleep(pause)
-        except requests.exceptions.ConnectionError as errc:
-            if i == max_retries - 1:
-                print("ConnectionError:", errc)
-                continue
-            pause = (2 ** i) * backoff_factor
-            time.sleep(pause)
-        except requests.exceptions.RequestException as err:
-            if i == max_retries - 1:
-                print("Error:", err)
-                continue
+                raise
             pause = (2 ** i) * backoff_factor
             time.sleep(pause)
 
 
-def get_friends(user_id: int, fields: str = '') -> Any:
+def get_friends(user_id: int, fields: str = '') -> List[Any]:
     """ Вернуть данные о друзьях пользователя
     :param user_id: идентификатор пользователя, список друзей которого нужно получить
     :param fields: список полей, которые нужно получить для каждого пользователя
@@ -65,10 +45,10 @@ def get_friends(user_id: int, fields: str = '') -> Any:
     url = "{}/friends.get".format(config.VK_CONFIG.get('domain'))
     friends = get(url, query_params)
     time.sleep(0.333334)
-    return friends.json()
+    return friends.json().get('response').get('items')
 
 
-def messages_get_history(user_id: int, offset: int = 0, count: int = 20) -> Any:
+def messages_get_history(user_id: int, offset: int = 0, count: int = 20) -> List[dict]:
     """ Получить историю переписки с указанным пользователем
     :param user_id: идентификатор пользователя, с которым нужно получить историю переписки
     :param offset: смещение в истории переписки
@@ -103,18 +83,3 @@ def messages_get_history(user_id: int, offset: int = 0, count: int = 20) -> Any:
         end = dt.datetime.now()
         time.sleep(max(0, 0.333334 - (end - begin).total_seconds()))
     return messages
-
-def get_last_name(user_id: int) -> str:
-    """ Вернуть имя пользователя
-    :param user_id: идентификатор пользователя, фамилию которого нужно получить
-    """
-    assert isinstance(user_id, int), "user_id must be positive integer"
-    assert user_id > 0, "user_id must be positive integer"
-    query_params = {
-        'access_token': config.VK_CONFIG.get('access_token'),
-        'user_id': user_id,
-        'v': config.VK_CONFIG.get('version')
-    }
-    url = "{}/users.get".format(config.VK_CONFIG.get('domain'))
-    user = get(url, query_params)
-    return user.json()['response'][0].get('last_name')
