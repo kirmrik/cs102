@@ -16,12 +16,14 @@ class User(BaseUser):
     bdate: Optional[str]
 
 
-class Message(dict):
+class Message(BaseModel):
     """ Модель сообщения """
     id: int
     date: int
     from_id: int
     peer_id: int
     text: str
+    random_id: int
+    important: bool
     
     
