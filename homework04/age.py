@@ -3,20 +3,24 @@ from statistics import median
 from typing import Optional
 
 from api import get_friends
-from api_models import User
 
 
-def age_from_bdate(bd: str) -> Optional[float]:
+def age_from_bdate(bd: str) -> int:
     """ Вычисляет возраст по дате рождения
     :param bdate: дата рождения в виде "dd.mm.yyyy"
     """
-    now = dt.datetime.now()
-    then = dt.datetime(int(bd.split(".")[2]),
-                        int(bd.split(".")[1]),
-                        int(bd.split(".")[0])
-                        )
-    delta = now - then
-    return round(delta.days/365, 2)
+    today = dt.datetime.now()
+    born = dt.datetime(int(bd.split(".")[2]),
+                       int(bd.split(".")[1]),
+                       int(bd.split(".")[0])
+                       )
+    try:
+        birthday = born.replace(year=today.year)
+    except ValueError:  # February 29
+        birthday = born.replace(year=today.year, month=born.month+1, day=1)
+    if birthday > today:
+        return today.year - born.year - 1
+    return today.year - born.year
 
 
 def age_predict(user_id: int) -> Optional[float]:
@@ -27,12 +31,17 @@ def age_predict(user_id: int) -> Optional[float]:
     """
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
-    dates = get_friends(user_id, 'bdate')
+    friends = get_friends(user_id, 'bdate')
     ages = []
-    for i in range(dates['response']['count']):
-        try:
-            if(len(dates['response']['items'][i]['bdate']) > 5):
-                ages.append(age_from_bdate(dates['response']['items'][i]['bdate']))
-        except:
-            pass
-    return round(median(ages), 2)
+    if friends:
+        for friend in friends:
+            try:
+                if len(friend.get('bdate')) > 5:
+                    ages.append(age_from_bdate(friend.get('bdate')))
+            except:
+                pass
+    else:
+        return None
+    if ages:
+        return median(ages)
+    return None
