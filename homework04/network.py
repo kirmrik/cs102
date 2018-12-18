@@ -1,3 +1,4 @@
+
 import datetime
 import time
 from typing import List, Tuple, Union
@@ -58,8 +59,6 @@ def plot_graph(edgelist: List[Tuple[int, int]], last_names: List[str]) -> None:
             repulserad=N ** 3)
         }
     g.simplify(multiple=True, loops=True)
-    # communities = g.community_edge_betweenness(directed=False)
-    # clusters = communities.as_clustering()
     clusters = g.community_multilevel()
     pal = igraph.drawing.colors.ClusterColoringPalette(len(clusters))
     g.vs['color'] = pal.get_many(clusters.membership)
@@ -69,8 +68,6 @@ if __name__ == '__main__':
     id = 59145192
     friends_ids = []
     friends_last_names = []
-    # friends_ids = [id]
-    # friends_last_names = [get_last_name(id)]
     friends = get_friends(id, 'last_name')
     for friend in friends['response']['items']:
         friends_ids.append(friend.get('id'))
