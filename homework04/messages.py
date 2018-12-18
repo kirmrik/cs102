@@ -5,6 +5,7 @@ import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
 
+from api_models import Message
 from api import messages_get_history
 import config
 
@@ -16,6 +17,13 @@ plotly.tools.set_credentials_file(
     username=config.PLOTLY_CONFIG['username'],
     api_key=config.PLOTLY_CONFIG['api_key']
 )
+
+
+def Message_from_dict(messages: List[dict]) -> List[Message]:
+    Mes_list = []
+    for value in messages:
+        Mes_list.append(Message(**value))
+    return Mes_list
 
 
 def fromtimestamp(ts: int) -> datetime.date:
@@ -31,7 +39,7 @@ def count_dates_from_messages(messages: List[dict]) -> Tuple[Dates, Frequencies]
     y = []
     if messages:
         for value in messages:
-            dates.append(fromtimestamp(value.get('date')))
+            dates.append(fromtimestamp(value.date))
         date_counter = Counter(dates)
         x = list(date_counter.keys())
         y = list(date_counter.values())
