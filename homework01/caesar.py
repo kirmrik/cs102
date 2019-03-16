@@ -1,3 +1,6 @@
+"""Caesar Encrypter/Decrypter"""
+
+
 def encrypt_caesar(plaintext):
     """
     >>> encrypt_caesar("PYTHON")
@@ -9,22 +12,17 @@ def encrypt_caesar(plaintext):
     >>> encrypt_caesar("")
     ''
     """
-
-    def pt_letter(letter):
-
-        if ("A" <= letter <= "Z"):
-            return chr(ord("A") + (ord(letter) - ord("A") + 3) % 26)
-        elif ("a" <= letter <= "z"):
-            return chr(ord("a") + (ord(letter) - ord("a") + 3) % 26)
-        else:
-            return letter
-
-
-    ptbl=list(plaintext)
-    ciphertext=""
+    ptbl = list(plaintext)
+    ciphertext = ""
     for i in ptbl:
-        ciphertext += pt_letter(i)
+        if "A" <= i <= "Z":
+            ciphertext += chr(ord("A") + (ord(i) - ord("A") + 3) % 26)
+        elif "a" <= i <= "z":
+            ciphertext += chr(ord("a") + (ord(i) - ord("a") + 3) % 26)
+        else:
+            ciphertext += i
     return ciphertext
+
 
 def decrypt_caesar(ciphertext):
     """
@@ -37,17 +35,13 @@ def decrypt_caesar(ciphertext):
     >>> decrypt_caesar("")
     ''
     """
-    def ct_letter(letter):
-
-        if ("A" <= letter <= "Z"):
-            return chr(ord("A") + (26 + ord(letter) - ord("A") - 3) % 26)
-        elif ("a" <= letter <= "z"):
-            return chr(ord("a") + (26 + ord(letter) - ord("a") - 3) % 26)
-        else:
-            return letter
-
-    ctbl=list(ciphertext)
-    plaintext=""
+    ctbl = list(ciphertext)
+    plaintext = ""
     for i in ctbl:
-        plaintext += ct_letter(i)
+        if "A" <= i <= "Z":
+            plaintext += chr(ord("A") + (26 + ord(i) - ord("A") - 3) % 26)
+        elif "a" <= i <= "z":
+            plaintext += chr(ord("a") + (26 + ord(i) - ord("a") - 3) % 26)
+        else:
+            plaintext += i
     return plaintext

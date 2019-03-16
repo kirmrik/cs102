@@ -1,7 +1,8 @@
+"""RSA Encrypter/Decrypter"""
 import random
 
 
-def is_prime(n):
+def is_prime(num):
     """
     Tests to see if a number is prime.
     >>> is_prime(2)
@@ -11,17 +12,17 @@ def is_prime(n):
     >>> is_prime(8)
     False
     """
-    if n <= 1:
+    if num <= 1:
         return False
-    if n % 2 == 0:
-        return n == 2
+    if num % 2 == 0:
+        return num == 2
     j = 3
-    while j * j <= n and n % j != 0:
-       j += 2       
-    return j * j > n
+    while j * j <= num and num % j != 0:
+        j += 2
+    return j * j > num
 
 
-def gcd(a, b):
+def gcd(num1, num2):
     """
     Euclid's algorithm for determining the greatest common divisor.
     >>> gcd(12, 15)
@@ -29,33 +30,33 @@ def gcd(a, b):
     >>> gcd(3, 7)
     1
     """
-    while a != 0 and b != 0:
-        if a > b:
-            a = a % b
+    while num1 != 0 and num2 != 0:
+        if num1 > num2:
+            num1 = num1 % num2
         else:
-            b = b % a
-    return (a + b)
+            num2 = num2 % num1
+    return num1 + num2
 
 
-def multiplicative_inverse(e, phi):
+def multiplicative_inverse(nume, phi):
     """
     Euclid's extended algorithm for finding the multiplicative
     inverse of two numbers.
     >>> multiplicative_inverse(7, 40)
     23
     """
-
     (x, lx) = (0, 1)
     (y, ly) = (1, 0)
-    (oa,ob) = (e, phi)
-    
+    (oa, ob) = (nume, phi)
     while phi != 0:
-        q = e // phi
-        (e, phi)  = (phi, e % phi)
-        (x, lx) = ((lx - (q * x)),x)
-        (y, ly) = ((ly - (q * y)),y)
-    if (lx < 0): lx += ob
-    if (ly < 0): ly += oa
+        q = nume // phi
+        (nume, phi) = (phi, nume % phi)
+        (x, lx) = ((lx - (q * x)), x)
+        (y, ly) = ((ly - (q * y)), y)
+    if lx < 0:
+        lx += ob
+    if ly < 0:
+        ly += oa
     return lx
 
 
@@ -113,4 +114,4 @@ if __name__ == '__main__':
     print(''.join(map(lambda x: str(x), encrypted_msg)))
     print("Decrypting message with public key ", public, " . . .")
     print("Your message is:")
-print(decrypt(public, encrypted_msg))
+    print(decrypt(public, encrypted_msg))
