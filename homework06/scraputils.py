@@ -1,9 +1,10 @@
+from typing import List, Dict, Union
+import time
 import requests
 from bs4 import BeautifulSoup
-import time
 
 
-def extract_news(parser):
+def extract_news(parser: type) -> List[Dict[str, Union[str, int]]]:
     """ Extract news from a given web page """
     news_list = []
     tbl_list = parser.table.findAll('table')
@@ -19,9 +20,7 @@ def extract_news(parser):
             comment_list.append(int(sub.text.split()[-2]))
         except:
             comment_list.append(0)
-    for user, comment, point, title, url in zip(
-        user_list, comment_list, point_list, title_list, url_list
-        ):
+    for user, comment, point, title, url in zip(user_list, comment_list, point_list, title_list, url_list):
         new = {}
         new['author'] = user
         new['comments'] = comment
@@ -32,7 +31,7 @@ def extract_news(parser):
     return news_list
 
 
-def extract_next_page(parser):
+def extract_next_page(parser: type) -> str:
     """ Extract next page URL """
     tbl_list = parser.table.findAll('table')
     title_list = tbl_list[1].find_all("a", attrs={"class": "morelink"})
@@ -40,7 +39,7 @@ def extract_next_page(parser):
     return next_page
 
 
-def get_news(url, n_pages=1):
+def get_news(url: str, n_pages: int = 1) -> List[Dict[str, Union[str, int]]]:
     """ Collect news from a given web page """
     news = []
     i = 0
@@ -61,4 +60,3 @@ def get_news(url, n_pages=1):
         n_pages -= 1
         i = 0
     return news
-

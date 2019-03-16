@@ -6,6 +6,7 @@ from scraputils import get_news
 from db import News, session
 from bayes import NaiveBayesClassifier
 
+
 @route("/")
 @route("/news")
 def news_list():
@@ -59,9 +60,21 @@ def recommendations():
     # 1. Получить список неразмеченных новостей из БД
     # 2. Получить прогнозы для каждой новости
     # 3. Вывести ранжированную таблицу с новостями
+
+    s = session()
+    rows = s.query(News).filter(News.label != None).all()
+    labels = [row.label for row in rows]
+    titles = [row.title + ' ' + row.author + ' ' + row.url.split('//')[-1].split('/')[0].replace('.', '') for row in rows]
+    model = NaiveBayesClassifier()
+    model.fit(titles, labels)
+    rows = s.query(News).filter(News.label == None).all()
+    titles = [row.title + ' ' + row.author + ' ' + row.url.split('//')[-1].split('/')[0].replace('.', '') for row in rows]
+    classification = sorted(zip(rows, model.predict(titles)), key=lambda x: (x[1][0], abs(x[1][1])))
+    classified_news = []
+    for record in classification:
+        classified_news.append(record[0])
     return template('news_recommendations', rows=classified_news)
 
 
 if __name__ == "__main__":
     run(host="localhost", port=8080)
-

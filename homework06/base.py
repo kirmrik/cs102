@@ -1,4 +1,3 @@
-import requests
 from scraputils import get_news
 from db import News, session
 

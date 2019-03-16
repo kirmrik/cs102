@@ -11,10 +11,10 @@
              <tfoot class="full-width">
                 <tr>
                    <th colspan="2">
-                        <a href="/recommendations" class="ui left floated small primary button">Recommendations</a>
-                   </th>
-                   <th>Total records: {{ len(rows) }}</th>
-                   <th>
+                        <a href="/news" class="ui left floated small primary button">Unlabeled News</a>
+                    </th>
+                   <th colspan="2">Total records: {{ len(rows) }}</th>
+                   <th colspan="3">
                         <a href="/update" class="ui right floated small primary button">I Wanna more Hacker News!</a>
                     </th>
                 </tr>
@@ -26,7 +26,6 @@
                 <th>Author</th>
                 <th>#Likes</th>
                 <th>#Comments</th>
-                <th colspan="3">Label</th>
             </thead>
             <tbody>
                 %for row in rows:
@@ -35,19 +34,16 @@
                     <td>{{ row.author }}</td>
                     <td>{{ row.points }}</td>
                     <td>{{ row.comments }}</td>
-                    <td class="positive"><a href="/add_label/?label=good&id={{ row.id }}">Интересно</a></td>
-                    <td class="active"><a href="/add_label/?label=maybe&id={{ row.id }}">Возможно</a></td>
-                    <td class="negative"><a href="/add_label/?label=never&id={{ row.id }}">Не интересно</a></td>
                 </tr>
                 %end
             </tbody>
              <tfoot class="full-width">
                 <tr>
                    <th colspan="1">
-                        <a href="/recommendations" class="ui left floated small primary button">Recommendations</a>
-                   </th>
-                   <th colspan="2">Total records: {{ len(rows) }}</th>
-                   <th colspan="4">
+                        <a href="/news" class="ui left floated small primary button">Unlabeled News</a>
+                    </th>
+                   <th colspan="1">Total records: {{ len(rows) }}</th>
+                   <th colspan="2">
                         <a href="/update" class="ui right floated small primary button">I Wanna more Hacker News!</a>
                     </th>
                 </tr>

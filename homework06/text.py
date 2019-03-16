@@ -1,12 +1,26 @@
+from typing import List
+import string
 import nltk
-from nltk.corpus import stopwords
 from textblob import TextBlob
-from textblob import Word
+
+'''
+def clean(text: str) -> List[str]:
+    translator = str.maketrans("", "", string.punctuation)
+    text = text.translate(translator)
+    cleaned_text = [word.lower() for word in text.split()]
+    return cleaned_text
+    # test_SMSSpamCollection: model.score(X_test, y_test) = 0.9832535885167464
+    # test_news.db: model.score(titles, labels) = 0.993421052631579
+'''
 
 
-def clean(text):
+def clean(text: str) -> List[str]:
+    translator = str.maketrans("", "", string.punctuation)
+    text = text.translate(translator)
     tb_text = TextBlob(text)
     stop_words = nltk.corpus.stopwords.words('english')
     words_list = [word for word in tb_text.words.stem().lower() if word not in stop_words]
     cleaned_text = list(set(words_list))
     return cleaned_text
+    # test_SMSSpamCollection: model.score(X_test, y_test) = 0.9772727272727273
+    # test_news.db: model.score(titles, labels) = 0.9967105263157895
