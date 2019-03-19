@@ -1,3 +1,6 @@
+"""
+Class News
+"""
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
@@ -10,6 +13,7 @@ session = sessionmaker(bind=engine)
 
 
 class News(Base):
+    """ Class News """
     __tablename__ = "news"
     id = Column(Integer, primary_key=True)
     title = Column(String)

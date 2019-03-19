@@ -1,3 +1,6 @@
+'''
+Functions extract_news() и extract_next_page() for get_news()
+'''
 from typing import List, Dict, Union
 import time
 import requests
@@ -9,7 +12,10 @@ def extract_news(parser: type) -> List[Dict[str, Union[str, int]]]:
     news_list = []
     tbl_list = parser.table.findAll('table')
     title_list = tbl_list[1].find_all("a", attrs={"class": "storylink"})
-    url_list = ['https://news.ycombinator.com/' + title.get('href') if title.get('href').startswith('item?') else title.get('href') for title in title_list]
+    url_list = ['https://news.ycombinator.com/' + title.get('href')
+                if title.get('href').startswith('item?')
+                else title.get('href')
+                for title in title_list]
     title_list = [title.text for title in title_list]
     sub_list = tbl_list[1].find_all("td", attrs={"class": "subtext"})
     user_list = [sub.text.split()[3] for sub in sub_list]
@@ -18,9 +24,13 @@ def extract_news(parser: type) -> List[Dict[str, Union[str, int]]]:
     for sub in sub_list:
         try:
             comment_list.append(int(sub.text.split()[-2]))
-        except:
+        except ValueError:
             comment_list.append(0)
-    for user, comment, point, title, url in zip(user_list, comment_list, point_list, title_list, url_list):
+    for user, comment, point, title, url in zip(user_list,
+                                                comment_list,
+                                                point_list,
+                                                title_list,
+                                                url_list):
         new = {}
         new['author'] = user
         new['comments'] = comment
