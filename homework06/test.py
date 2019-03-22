@@ -33,12 +33,8 @@ print(model.score(X_test, y_test))
 # test_news.db
 s = session()
 rows = s.query(News).filter(News.label != None).all()
-labels = [str(row.label) for row in rows]
-titles = [' '.join((
-    row.title,
-    row.author,
-    row.url.split('//')[-1].split('/')[0].replace('.', '')
-    )) for row in rows]
+labels = [row.label for row in rows]
+titles = [row.cleaned for row in rows]
 
 # with MultinomialNB
 model = Pipeline([

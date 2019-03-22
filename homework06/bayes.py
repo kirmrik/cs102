@@ -36,10 +36,7 @@ class NaiveBayesClassifier:
         for word in self.words_counter:
             for class_ in self.classes:
                 self.words[word][class_] = (
-                    self.pairs_counter.get((word, class_), 0) + self.factor
-                    ) / (
-                        self.classes[class_]['appearances'] + self.factor * d
-                        )
+                    self.pairs_counter.get((word, class_), 0) + self.factor) / (self.classes[class_]['appearances'] + self.factor * d)
 
     def predict(self, X):
         """ Perform classification on an array of test vectors X. """

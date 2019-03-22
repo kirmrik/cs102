@@ -12,6 +12,7 @@ if __name__ == "__main__":
                       author=new['author'],
                       url=new['url'],
                       comments=new['comments'],
-                      points=new['points'])
+                      points=new['points'],
+                      cleaned=new['cleaned'])
         S.add(record)
     S.commit()

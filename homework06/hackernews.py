@@ -33,7 +33,6 @@ def add_label():
         news_record.label = request.query.label
         s.commit()
     except BaseException:
-        print('uups')
         pass
     redirect("/news")
 
@@ -76,19 +75,11 @@ def recommendations():
     s = session()
     rows = s.query(News).filter(News.label != None).all()
     labels = [row.label for row in rows]
-    titles = [' '.join((
-        row.title,
-        row.author,
-        row.url.split('//')[-1].split('/')[0].replace('.', '')
-        )) for row in rows]
+    titles = [row.cleaned for row in rows]
     model = NaiveBayesClassifier()
     model.fit(titles, labels)
     rows = s.query(News).filter(News.label == None).all()
-    titles = [' '.join((
-        row.title,
-        row.author,
-        row.url.split('//')[-1].split('/')[0].replace('.', '')
-        )) for row in rows]
+    titles = [row.cleaned for row in rows]
     classification = sorted(zip(rows, model.predict(titles)),
                             key=lambda x: (x[1][0], abs(x[1][1])))
     classified_news = []

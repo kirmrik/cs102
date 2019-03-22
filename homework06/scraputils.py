@@ -17,8 +17,9 @@ def extract_news(parser: type) -> List[Dict[str, Union[str, int]]]:
                 else title.get('href')
                 for title in title_list]
     title_list = [title.text for title in title_list]
+    user_list = tbl_list[1].find_all("a", attrs={"class": "hnuser"})
+    user_list = [user.text for user in user_list]
     sub_list = tbl_list[1].find_all("td", attrs={"class": "subtext"})
-    user_list = [sub.text.split()[3] for sub in sub_list]
     point_list = [int(sub.text.lstrip('\n').split()[0]) for sub in sub_list]
     comment_list = []
     for sub in sub_list:
@@ -37,6 +38,8 @@ def extract_news(parser: type) -> List[Dict[str, Union[str, int]]]:
         new['points'] = point
         new['title'] = title
         new['url'] = url
+        new['cleaned'] = ' '.join((title, user,
+                                   url.split('//')[-1].split('/')[0].replace('.', '')))
         news_list.append(new)
     return news_list
 
