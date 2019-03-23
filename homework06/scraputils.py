@@ -19,14 +19,16 @@ def extract_news(parser: type) -> List[Dict[str, Union[str, int]]]:
     title_list = [title.text for title in title_list]
     user_list = tbl_list[1].find_all("a", attrs={"class": "hnuser"})
     user_list = [user.text for user in user_list]
+    point_list = tbl_list[1].find_all("span", attrs={"class": "score"})
+    point_list = [int(''.join(filter(str.isdigit, point.text))) for point in point_list]
     sub_list = tbl_list[1].find_all("td", attrs={"class": "subtext"})
-    point_list = [int(sub.text.lstrip('\n').split()[0]) for sub in sub_list]
     comment_list = []
     for sub in sub_list:
-        try:
-            comment_list.append(int(sub.text.split()[-2]))
-        except ValueError:
+        words_list = sub.text.split()
+        if words_list.pop() == 'discuss':
             comment_list.append(0)
+            continue
+        comment_list.append(int(words_list.pop()))
     for user, comment, point, title, url in zip(user_list,
                                                 comment_list,
                                                 point_list,
@@ -38,7 +40,8 @@ def extract_news(parser: type) -> List[Dict[str, Union[str, int]]]:
         new['points'] = point
         new['title'] = title
         new['url'] = url
-        new['cleaned'] = ' '.join((title, user,
+        new['cleaned'] = ' '.join((title,
+                                   user,
                                    url.split('//')[-1].split('/')[0].replace('.', '')))
         news_list.append(new)
     return news_list

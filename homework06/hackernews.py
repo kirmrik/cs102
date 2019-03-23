@@ -58,7 +58,8 @@ def update_news():
                       author=new['author'],
                       url=new['url'],
                       comments=new['comments'],
-                      points=new['points'])
+                      points=new['points'],
+                      cleaned=new['cleaned'])
         s.add(record)
     s.commit()
     redirect("/news")
