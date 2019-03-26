@@ -39,9 +39,9 @@ print('8. Среди кого больше доля зарабатывающих
       '(Married-civ-spouse, Married-spouse-absent или Married-AF-spouse),\n'
       'остальных считаем холостыми.')
 print('Married  : ', data['marital-status'][data['marital-status'].str.startswith(' Mar')]
-      [data['salary'] == ' >50K'].value_counts().sum() / len(data))
+      [data['sex'] == ' Male'][data['salary'] == ' >50K'].value_counts().sum() / len(data))
 print('Unmarried: ', data['marital-status'][data['marital-status'].str.endswith('d')]
-      [data['salary'] == ' >50K'].value_counts().sum() / len(data), '\n')
+      [data['sex'] == ' Male'][data['salary'] == ' >50K'].value_counts().sum() / len(data), '\n')
 
 
 print('9. Какое максимальное число часов человек работает в неделю\n'

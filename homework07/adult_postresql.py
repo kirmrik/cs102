@@ -102,15 +102,15 @@ cursor.execute(
     """
     SELECT ROUND((COUNT(*) / (SELECT COUNT(*) FROM adult)::numeric), 6) as "Married"
         FROM adult
-        WHERE marital_status LIKE ' Mar%' AND salary = ' >50K'
+        WHERE marital_status LIKE ' Mar%' AND sex = ' Male' AND salary = ' >50K'
     """
 )
 print(tabulate(fetch_all(cursor), "keys", "psql"), "\n")
 cursor.execute(
     """
-    SELECT ROUND((COUNT(*) / (SELECT COUNT(*) FROM adult)::numeric), 6) as "Unarried"
+    SELECT ROUND((COUNT(*) / (SELECT COUNT(*) FROM adult)::numeric), 6) as "Unmarried"
         FROM adult
-        WHERE marital_status LIKE '%d' AND salary = ' >50K'
+        WHERE marital_status LIKE '%d' AND sex = ' Male' AND salary = ' >50K'
     """
 )
 print(tabulate(fetch_all(cursor), "keys", "psql"), "\n")
