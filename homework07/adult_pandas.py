@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-data = pd.read_csv('adult.data.csv')
+data = pd.read_csv('data/adult.data.csv')
 
 print('1. Сколько мужчин и женщин (признак sex) представлено в этом наборе данных?')
 print(data['sex'].value_counts(), '\n')

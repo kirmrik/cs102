@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS adult (
 cursor.execute(query)
 conn.commit()
 
-with open('adult.data.csv', 'r') as f:
+with open('data/adult.data.csv', 'r') as f:
     reader = csv.reader(f)
     # Skip the header row
     next(reader)

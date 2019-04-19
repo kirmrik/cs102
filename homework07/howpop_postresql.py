@@ -21,12 +21,11 @@ print('1. Сколько мужчин и женщин (признак sex) пр�
 cursor.execute(
     """
     SELECT sex, COUNT(*)
-        FROM adult
-        GROUP BY sex
+        FROM howpop
+        GROUP BY year, month
     """
 )
 print(tabulate(fetch_all(cursor), "keys", "psql"), "\n")
-
 
 print('2. Каков средний возраст (признак age) женщин?')
 cursor.execute(

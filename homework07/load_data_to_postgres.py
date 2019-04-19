@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS telecom_churn (
 cursor.execute(query)
 conn.commit()
 
-with open('telecom_churn.csv', 'r') as f:
+with open('data/telecom_churn.csv', 'r') as f:
     reader = csv.reader(f)
     # Skip the header row
     next(reader)
