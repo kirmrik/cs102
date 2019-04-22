@@ -62,3 +62,14 @@ cursor.execute(
     """
 )
 conn.commit()
+
+cursor.execute(
+    """
+    UPDATE howpop
+    SET year = date_part('year', published),
+        month = date_part('month', published),
+        dayofweek = date_part('dow', published),
+        hour = date_part('hour', published)
+    """
+)
+conn.commit()

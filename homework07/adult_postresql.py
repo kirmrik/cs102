@@ -2,7 +2,7 @@ import psycopg2
 from pprint import pprint as pp
 from tabulate import tabulate
 
-conn = psycopg2.connect("host=localhost port=5432 dbname=howpop user=postgres password=secret")
+conn = psycopg2.connect("host=localhost port=5432 dbname=adult user=postgres password=secret")
 cursor = conn.cursor() # cursor_factory=psycopg2.extras.DictCursor)
 
 def fetch_all(cursor):
@@ -12,11 +12,11 @@ def fetch_all(cursor):
 
 
 print('Посмотрим на первые 5 строк:')
-cursor.execute("SELECT * FROM howpop LIMIT 5")
+cursor.execute("SELECT * FROM adult LIMIT 5")
 records = cursor.fetchall()
 print(records, "\n")
 
-'''
+
 print('1. Сколько мужчин и женщин (признак sex) представлено в этом наборе данных?')
 cursor.execute(
     """
@@ -150,4 +150,4 @@ cursor.execute(
     """
 )
 print(tabulate(fetch_all(cursor), "keys", "psql"), "\n")
-'''
+

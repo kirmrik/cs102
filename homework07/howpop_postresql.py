@@ -1,6 +1,9 @@
 import psycopg2
 from pprint import pprint as pp
 from tabulate import tabulate
+import seaborn as sns
+import matplotlib.pyplot as plt
+from pylab import rcParams
 
 conn = psycopg2.connect("host=localhost port=5432 dbname=howpop user=postgres password=secret")
 cursor = conn.cursor() # cursor_factory=psycopg2.extras.DictCursor)
@@ -16,17 +19,20 @@ cursor.execute("SELECT * FROM howpop LIMIT 5")
 records = cursor.fetchall()
 print(records, "\n")
 
-'''
-print('1. Сколько мужчин и женщин (признак sex) представлено в этом наборе данных?')
+
+print('1. В каком месяце (и какого года) было больше всего публикаций?')
 cursor.execute(
     """
-    SELECT sex, COUNT(*)
+    SELECT year, month, COUNT(*)
         FROM howpop
         GROUP BY year, month
+        ORDER BY COUNT(*) DESC
+        LIMIT 10
     """
 )
 print(tabulate(fetch_all(cursor), "keys", "psql"), "\n")
 
+'''
 print('2. Каков средний возраст (признак age) женщин?')
 cursor.execute(
     """
